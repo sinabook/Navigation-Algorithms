@@ -1,6 +1,7 @@
 from Manhatan import manhattan_distance
 from Succesor import get_successors
 def Heuristic(matrix,node,addresses_of_T):
+    
     x=node[0]
     y=node[1]
     AmountOfG=[]
@@ -36,4 +37,6 @@ def Heuristic(matrix,node,addresses_of_T):
     idx=addr[index]
     temp=matrix[idx[0]][idx[1]]
     matrix[idx[0]][idx[1]]=temp[0]
-    return idx
+    
+
+    return [idx,matrix]
