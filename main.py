@@ -10,4 +10,3 @@ addresses_of_R = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for c
 a_star_search(matrix,start=addresses_of_R[0])
 
 
-

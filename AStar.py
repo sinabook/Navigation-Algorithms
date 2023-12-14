@@ -9,14 +9,17 @@ def a_star_search(matrix,start):
     while(len(visited)<=num_cols*num_rows):
         if(counter<count_of_T):
             node=visited[-1]
-            list=Heuristic(matrix,node=node,addresses_of_T=addresses_of_T)
+            list=Heuristic(matrix,node=node,addresses_of_T=addresses_of_T,visited=visited)
+            if(list=="This is over"):
+                print("This is over")
+                break
             coordinates=list[0]
             if("T" in matrix[coordinates[0]][coordinates[1]]):
                 counter+=1
             matrix=list[1]
             visited.append(list[0])
+            print("visited",visited)
         if(counter==count_of_T):
             break
-    print(visited)
     
 
