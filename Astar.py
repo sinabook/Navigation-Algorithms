@@ -1,24 +1,11 @@
-import heapq
+from Hueristic import Heuristic
+def a_star_search(matrix,start):
+    count_of_T = sum(cell.count('T') for row in matrix for cell in row)
+    addresses_of_T = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'T' in cell]
+    counter=0
+    energySpent=0
+    visited=[start]
+    print(visited)
+    visited.append(Heuristic(matrix,node=start,addresses_of_T=addresses_of_T))
+    print(visited)
 
-class AStar:
-    def __init__(self, initial_state):
-        self.initial_state = initial_state
-        self.visited = set()
-
-    def heuristic(self, state):
-        
-        pass
-
-    def search(self):
-        priority_queue = [(self.heuristic(self.initial_state), 0, self.initial_state)]
-
-        while priority_queue:
-            _, cost, current_state = heapq.heappop(priority_queue)
-
-            if current_state not in self.visited:
-                self.visited.add(current_state)
-
-            
-
-                for successor_state in successor(current_state):
-                    heapq.heappush(priority_queue, (self.heuristic(successor_state) + cost + 1, cost + 1, successor_state))

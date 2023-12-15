@@ -1,20 +1,33 @@
 from queue import Queue
 
-class BFS:
-    def __init__(self, initial_state):
-        self.initial_state = initial_state
-        self.visited = set()
+def bfs(matrix, start, goal):
+    rows, cols = len(matrix), len(matrix[0])
 
-    def search(self):
-        queue = Queue()
-        queue.put(self.initial_state)
+    visited = set()
+    queue = Queue()
+    queue.put(start)
+    visited.add(start)
 
-        while not queue.empty():
-            current_state = queue.get()
-            if current_state not in self.visited:
-                self.visited.add(current_state)
+    while not queue.empty():
+        current_state = queue.get()
 
-                
+        if current_state == goal:
+            return True  # هدف پیدا شده است
 
-                for successor_state in successor(current_state):
-                    queue.put(successor_state)
+        x, y = current_state
+        successors = get_successors(matrix, x, y)
+
+        for successor in successors:
+            if successor not in visited:
+                queue.put(successor)
+                visited.add(successor)
+
+    return False  # هدف پیدا نشده است
+
+
+
+result = bfs(matrix_example, start_position, goal_position)
+if result:
+    print()
+else:
+    print()
