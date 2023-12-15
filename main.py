@@ -8,5 +8,3 @@ matrix=[["1R","1","1","5","5","4","2C","1","15","1B"],
         ]
 addresses_of_R = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'R' in cell]
 a_star_search(matrix,start=addresses_of_R[0])
-
-

@@ -34,7 +34,8 @@ def Heuristic(matrix,node,addresses_of_T,visited):
         else:
             continue
     if(index is None):
-        return "This is over"
+        idx=None
+        return [idx,matrix]
     idx=get_address(matrix,x,y,visited=visited)[index]
     # idx=get_address(matrix,x,y)[index]
     temp=matrix[idx[0]][idx[1]]
