@@ -1,21 +1,32 @@
-class IDS:
-    def __init__(self, initial_state, max_depth):
-        self.initial_state = initial_state
-        self.max_depth = max_depth
-        self.visited = set()
+import heapq
 
-    def search(self):
-        for depth in range(self.max_depth + 1):
-            if self._dfs(self.initial_state, depth):
-                return
+def ucs(matrix, start, goal):
+    rows, cols = len(matrix), len(matrix[0])
 
-    def _dfs(self, current_state, depth):
-        if depth == 0:
-            return
+    visited = set()
+    priority_queue = [(0, start)]
+    visited.add(start)
 
-        if current_state not in self.visited:
-            self.visited.add(current_state)
+    while priority_queue:
+        cost, current_state = heapq.heappop(priority_queue)
+
+        if current_state == goal:
+            return True  
+
+        x, y = current_state
+        successors = get_successors(matrix, x, y)
+
+        for successor in successors:
+            if successor not in visited:
+                new_cost = cost + 1 
+                heapq.heappush(priority_queue, (new_cost, successor))
+                visited.add(successor)
+
+    return False  
 
 
-            for successor_state in successor(current_state):
-                self._dfs(successor_state, depth - 1)
+result = ucs(matrix_example, start_position, goal_position)
+if result:
+    print()
+else:
+    print()
