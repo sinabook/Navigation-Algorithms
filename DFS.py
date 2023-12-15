@@ -1,15 +1,28 @@
-class DFS:
-    def __init__(self, initial_state):
-        self.initial_state = initial_state
-        self.visited = set()
+def dfs(matrix, start, goal):
+    rows, cols = len(matrix), len(matrix[0])
 
-    def search(self):
-        self._dfs(self.initial_state)
+    visited = set()
 
-    def _dfs(self, current_state):
-        if current_state not in self.visited:
-            self.visited.add(current_state)
+    def dfs_recursive(current_state):
+        if current_state == goal:
+            return True   
 
-            
-            for successor_state in successor(current_state):
-                self._dfs(successor_state)
+        visited.add(current_state)
+
+        x, y = current_state
+        successors = get_successors(matrix, x, y)
+
+        for successor in successors:
+            if successor not in visited:
+                if dfs_recursive(successor):
+                    return True
+
+        return False
+
+    return dfs_recursive(start)
+
+result = dfs(matrix_example, start_position, goal_position)
+if result:
+    print()
+else:
+    print()
