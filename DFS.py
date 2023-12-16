@@ -1,28 +1,37 @@
-def dfs(matrix, start, goal):
-    rows, cols = len(matrix), len(matrix[0])
-
+from Address import get_address
+def dfs(matrix, start):
+    start=start[0]
     visited = set()
-
-    def dfs_recursive(current_state):
-        if current_state == goal:
+    count_of_T = sum(cell.count('T') for row in matrix for cell in row)
+    counter=0
+    def dfs_recursive(current_state,counter,count_of_T):
+        if "T" in matrix[current_state[0]][current_state[1]] and counter == count_of_T:
             return True   
-
+        if "T" in matrix[current_state[0]][current_state[1]] and counter != count_of_T:
+            counter +=1
         visited.add(current_state)
-
-        x, y = current_state
-        successors = get_successors(matrix, x, y)
-
-        for successor in successors:
-            if successor not in visited:
-                if dfs_recursive(successor):
+        x=current_state[0]
+        y=current_state[1]
+        addresses = get_address(matrix, x, y,visited=visited)
+        for address in addresses:
+            if address not in visited:
+                if dfs_recursive(address,counter,count_of_T):
                     return True
-
         return False
+    return dfs_recursive(start,counter=counter,count_of_T=count_of_T)
 
-    return dfs_recursive(start)
+matrix=[["1R","1","1","5","5","4","2C","1","15","1B"],
+        ["1","1","5","3","5","5","4","5","X","X"],
+        ["5","1I","1","6","2","2","2","1","1","1T"],
+        ["X","X","1","6","5","5","2","1","1","X"],
+        ["X","X","1","X","X","50","2","1C","1","X"],
+        ["1","1","1","2","2","2T","2","1","1","1"]
+        ]
+addresses_of_R = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'R' in cell]
+addresses_of_T = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'T' in cell]
 
-result = dfs(matrix_example, start_position, goal_position)
+result = dfs(matrix, start=addresses_of_R)
 if result:
-    print()
+    print("We have Reached the answer")
 else:
-    print()
+    print("We have not reached the answer")
