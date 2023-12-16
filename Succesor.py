@@ -1,6 +1,5 @@
 def get_successors(matrix, x, y,visited):
     successors = []
-
     # Check up
     if x - 1 >= 0 and matrix[x-1][y]!="X" and (x-1,y) not in visited:
         successors.append(matrix[x - 1][y])
