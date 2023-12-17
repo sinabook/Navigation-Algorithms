@@ -45,7 +45,6 @@ def Heuristic(matrix,node,addresses_of_T,visited):
         return [idx,matrix,Target,passed]
     idx=get_address(matrix,x,y,visited=visited)[index]
     temp=matrix[idx[0]][idx[1]]
-  
     if(len(temp)>1):
         if(temp[1]!="T"):
             Target=False
