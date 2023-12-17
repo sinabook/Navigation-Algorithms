@@ -1,5 +1,6 @@
 from queue import Queue
 from Address import get_address
+import timeit
 def bfs(matrix, start, goal):
     start=start[0]
     rows, cols = len(matrix), len(matrix[0])
@@ -41,10 +42,12 @@ matrix=[["1R","1","1","5","5","4","2C","1","15","1B"],
 addresses_of_R = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'R' in cell]
 addresses_of_T = [(row_idx, col_idx) for row_idx, row in enumerate(matrix) for col_idx, cell in enumerate(row) if 'T' in cell]
 
+time_taken = timeit.timeit(lambda: bfs(matrix,start=addresses_of_R, goal=addresses_of_T), number=1)
 result = bfs(matrix,start=addresses_of_R,goal=addresses_of_T)
 if result:
     print("We have reached all answers")
     print(result)
+    print (f"Execution time: {time_taken} seconds")
 else:
     print("We have not reached all answers")
     print(result)
