@@ -11,13 +11,8 @@ def Heuristic(matrix,node,addresses_of_T,visited):
         for i in range(0,len(addresses_of_T)):
             Temp.append(manhattan_distance((x,y),addresses_of_T[i]))
         AmountOfG.append(min(Temp))
-        print((x,y),"  ",min(Temp))
-        print("MIn",min(Temp))
-        print("Amount of G",AmountOfG)
-        print(get_successors(matrix,x,y,visited=visited))
-        print(get_address(matrix,x,y,visited=visited))
+ 
 
-        print("")
     AmountOfH=[]
     for i in range(len(get_successors(matrix,x,y,visited=visited))):
         temp=get_successors(matrix,x,y,visited=visited)[i]
@@ -43,10 +38,13 @@ def Heuristic(matrix,node,addresses_of_T,visited):
             continue
     if(index is None):
         idx=None
-        return [idx,matrix,Target]
+        if(len(AmountOfF)==0):
+            passed=0
+        else:
+            passed=min(AmountOfF)
+        return [idx,matrix,Target,passed]
     idx=get_address(matrix,x,y,visited=visited)[index]
     temp=matrix[idx[0]][idx[1]]
-  
     if(len(temp)>1):
         if(temp[1]!="T"):
             Target=False
@@ -55,4 +53,4 @@ def Heuristic(matrix,node,addresses_of_T,visited):
             Target=True
             matrix[idx[0]][idx[1]]=temp[0]
 
-    return [idx,matrix,Target]
+    return [idx,matrix,Target,min(AmountOfF)]

@@ -36,6 +36,7 @@ def a_star_search(matrix,start):
         else:
             matrix=list[1]
             visited.append(list[0])
-        
-    
+
+
+ 
 
