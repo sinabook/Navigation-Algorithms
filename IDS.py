@@ -1,37 +1,36 @@
 from Address import get_address
-import timeit 
 
-def ids_with_backtracking(matrix, start, goal, max_depth):
-    rows, cols = len(matrix), len(matrix[0])
+def ids_with_backtracking(matrix, start,max_depth):
+    visited = set()
+
+    counter=0
+    count_of_T = sum(cell.count('T') for row in matrix for cell in row)
 
     def dfs_recursive(current_state, depth, path):
-        if current_state == goal:
-            print("Path found:", path + [current_state])
+        if "T" in matrix[current_state[0]][current_state[1]] and counter == count_of_T:
             return True
+        if "T" in matrix[current_state[0]][current_state[1]] and counter != count_of_T:
+            counter += 1
+        visited.add(current_state)
 
         if depth == 0:
             return False
 
         x, y = current_state
-        successors = get_successors(matrix, x, y)
+        addresses = get_address(matrix, x, y, visited=visited)
 
-        for successor in successors:
-            if successor not in path:  # Avoid revisiting nodes
-                if dfs_recursive(successor, depth - 1, path + [current_state]):
+        for address in addresses:
+            if address not in path:
+                if dfs_recursive(address, depth - 1, path + [current_state]):
                     return True
+        visited.remove(current_state)  
 
         return False
 
     for depth in range(max_depth + 1):
         if dfs_recursive(start, depth, []):
-            return True
+            return [True,visited]
 
-    return False
+    return [False,visited]
 
-time_taken = timeit.timeit(lambda: ids_with_backtracking(matrix,start=addresses_of_R, goal=addresses_of_T), number=1)
-result = ids_with_backtracking(matrix_example, start_position, goal_position, max_depth=5)
-if result:
-    print("We have reached the answer.")
-    print (f"Execution time: {time_taken} seconds")
-else:
-    print("We have not reached the answer.")
+

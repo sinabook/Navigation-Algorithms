@@ -1,40 +1,31 @@
 import heapq
-import timeit 
+from Address import get_address
 
 def ucs_with_backtracking(matrix, start, goal):
-    visited = set()       
+    visited = []      
     visited_nodes = []    
     priority_queue = [(0, start)]  
-
+    count_of_T = sum(cell.count('T') for row in matrix for cell in row)
+    counter=0
     while priority_queue:
         cost, current_state = heapq.heappop(priority_queue)
 
-        if current_state == goal:
+        if "T" in matrix[current_state[0]][current_state[1]] and counter == count_of_T:
             visited_nodes.append(current_state)
-            print("Path found:", visited_nodes)
-            return True  
-
-        visited.add(current_state)
+            return [True,visited]
+        if "T" in matrix[current_state[0]][current_state[1]] and counter != count_of_T:
+            counter += 1
+        visited.append(current_state)
         visited_nodes.append(current_state)
 
         x, y = current_state
-        successors = get_successors(matrix, x, y)
+        addresses = get_address(matrix, x, y,visited=visited)
 
-        for successor in successors:
-            if successor not in visited:
+        for address in addresses:
+            if address not in visited:
                 new_cost = cost + 1  
-                heapq.heappush(priority_queue, (new_cost, successor))
-                visited.add(successor)
+                heapq.heappush(priority_queue, (new_cost, address))
+                visited.append(address)
 
-    print("Goal not found.")
-    return False
+    return [False,visited]
 
-# Example usage:
-result = ucs_with_backtracking(matrix_example, start_position, goal_position)
-time_taken = timeit.timeit(lambda: ucs_with_backtracking(matrix_example, start_position, goal_position), number=1)
-print (f"Execution time: {time_taken} seconds")
-
-if result:
-    print()
-else:
-    print()

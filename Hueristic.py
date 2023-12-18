@@ -11,7 +11,7 @@ def Heuristic(matrix,node,addresses_of_T,visited):
         for i in range(0,len(addresses_of_T)):
             Temp.append(manhattan_distance((x,y),addresses_of_T[i]))
         AmountOfG.append(min(Temp))
- 
+        
 
     AmountOfH=[]
     for i in range(len(get_successors(matrix,x,y,visited=visited))):
